@@ -395,19 +395,24 @@ def main():
             st.error(st.session_state.status_msg)
             
     st.header("2. Manual Review & Property Editor")
-    st.caption("Base units are maintained in **SI (kg/m³, Pa)** for standardization.")
+    st.caption("Base units are maintained in **SI (kg/m³, Pa)** for standardization. Inputs below are scaled for convenience.")
     
     edit_col1, edit_col2, edit_col3 = st.columns(3)
     with edit_col1:
         name_val = st.text_input("Name", st.session_state.current_material['name'])
         dens_val = st.number_input("Density (kg/m³)", value=float(st.session_state.current_material['density']), format="%.2f")
     with edit_col2:
-        E_val = st.number_input("Young's Modulus (Pa)", value=float(st.session_state.current_material['youngs_mod']), format="%.2e")
+        E_input = st.number_input("Young's Modulus (GPa)", value=float(st.session_state.current_material['youngs_mod'])/1e9, format="%.2f")
         pr_val = st.number_input("Poisson's Ratio", value=float(st.session_state.current_material['poisson']), format="%.3f")
     with edit_col3:
-        sy_val = st.number_input("Yield Strength (Pa)", value=float(st.session_state.current_material['yield_str']), format="%.2e")
-        et_val = st.number_input("Tangent Modulus (Pa)", value=float(st.session_state.current_material['tangent_mod']), format="%.2e")
+        sy_input = st.number_input("Yield Strength (MPa)", value=float(st.session_state.current_material['yield_str'])/1e6, format="%.2f")
+        et_input = st.number_input("Tangent Modulus (GPa)", value=float(st.session_state.current_material['tangent_mod'])/1e9, format="%.3f")
         src_val = st.text_input("Source URL/Reference", st.session_state.current_material['source_url'])
+        
+    # Convert back to base SI (Pa) for all internal logic
+    E_val = E_input * 1e9
+    sy_val = sy_input * 1e6
+    et_val = et_input * 1e9
         
     if st.button("Save to Library"):
         if name_val.strip():
