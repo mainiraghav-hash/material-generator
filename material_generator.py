@@ -220,8 +220,114 @@ def generate_ansys_xml(name, props, units):
     reparsed = minidom.parseString(rough_string)
     return reparsed.toprettyxml(indent="  ")
 
+def inject_custom_css():
+    st.markdown("""
+        <style>
+        /* Modern Minimalist Font & Background */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+        
+        html, body, [class*="css"] {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8fafc;
+            color: #1e293b;
+        }
+        
+        /* Clean up standard Streamlit structural paddings */
+        .block-container {
+            padding-top: 3rem;
+            padding-bottom: 3rem;
+            max-width: 1200px;
+        }
+
+        /* Subtle Card styling for inputs and layout blocks */
+        div[data-testid="stVerticalBlock"] > div > div[data-testid="stVerticalBlock"] {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            border: 1px solid #e2e8f0;
+            margin-bottom: 1rem;
+        }
+
+        /* Headers */
+        h1, h2, h3 {
+            font-weight: 600 !important;
+            letter-spacing: -0.025em !important;
+            color: #0f172a !important;
+        }
+        
+        h1 {
+            font-size: 2.25rem !important;
+            margin-bottom: 0.5rem !important;
+            background: linear-gradient(to right, #2563eb, #3b82f6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h2 {
+            font-size: 1.5rem !important;
+            margin-top: 2rem !important;
+            margin-bottom: 1rem !important;
+            border-bottom: 1px solid #e2e8f0;
+            padding-bottom: 0.5rem;
+        }
+
+        /* Inputs and Selectboxes */
+        .stTextInput input, .stNumberInput input, .stSelectbox div[data-baseweb="select"] {
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+            transition: all 0.2s ease-in-out;
+            background-color: #f8fafc;
+        }
+        
+        .stTextInput input:focus, .stNumberInput input:focus, .stSelectbox div[data-baseweb="select"]:focus-within {
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 1px #3b82f6 !important;
+            background-color: white;
+        }
+
+        /* Modern Primary Button */
+        button[kind="primary"], .stButton > button {
+            background-color: #3b82f6;
+            color: white;
+            font-weight: 500;
+            border-radius: 8px;
+            padding: 0.5rem 1.5rem;
+            border: none;
+            box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1);
+            transition: all 0.2s;
+            width: auto;
+        }
+        
+        button[kind="primary"]:hover, .stButton > button:hover {
+            background-color: #2563eb;
+            box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            transform: translateY(-1px);
+            color: white;
+        }
+
+        /* Text area styling (code previews) */
+        .stTextArea textarea {
+            font-family: 'JetBrains Mono', 'Courier New', monospace;
+            font-size: 0.875rem;
+            background-color: #1e293b;
+            color: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #cbd5e1;
+        }
+        
+        /* Metric/status messages */
+        .stAlert {
+            border-radius: 8px;
+            border: none;
+        }
+        </style>
+    """, unsafe_allow_html=True)
+
 def main():
     st.set_page_config(page_title="Universal Material Card Generator", layout="wide")
+    inject_custom_css()
+    
     st.title("Universal Material Card Generator")
     st.markdown("Generate ready-to-use material cards for **LS-DYNA** and **Ansys**.")
     
