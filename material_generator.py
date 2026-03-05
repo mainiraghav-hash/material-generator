@@ -325,10 +325,10 @@ def inject_custom_css():
     """, unsafe_allow_html=True)
 
 def main():
-    st.set_page_config(page_title="Universal Material Card Generator", layout="wide")
+    st.set_page_config(page_title="Material Mate v1", layout="wide")
     inject_custom_css()
     
-    st.title("Universal Material Card Generator")
+    st.title("Material Mate v1")
     st.markdown("Generate ready-to-use material cards for **LS-DYNA** and **Ansys**.")
     
     init_db()
