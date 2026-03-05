@@ -310,8 +310,8 @@ def inject_custom_css():
         .stTextArea textarea {
             font-family: 'JetBrains Mono', 'Courier New', monospace;
             font-size: 0.875rem;
-            background-color: #1e293b;
-            color: #f8fafc;
+            background-color: #f1f5f9;
+            color: #0f172a;
             border-radius: 8px;
             border: 1px solid #cbd5e1;
         }
